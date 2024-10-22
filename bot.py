@@ -1,9 +1,9 @@
 import os
 import sqlite3
+import time
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-# Replace with your actual bot token
 TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'
 
 # Initialize the database
@@ -13,17 +13,10 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS links (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            keyword TEXT,
-            link TEXT UNIQUE
+            keyword TEXT UNIQUE,
+            link TEXT
         )
     ''')
-    conn.commit()
-    conn.close()
-
-def add_link(keyword, link):
-    conn = sqlite3.connect('affiliate_links.db')
-    cursor = conn.cursor()
-    cursor.execute('INSERT OR IGNORE INTO links (keyword, link) VALUES (?, ?)', (keyword, link))
     conn.commit()
     conn.close()
 
@@ -48,9 +41,6 @@ def respond(update: Update, context: CallbackContext):
 
 def main():
     init_db()
-    # Example of adding links
-    add_link('book', 'https://www.amazon.com/your-affiliate-link-for-book')
-    add_link('laptop', 'https://www.amazon.com/your-affiliate-link-for-laptop')
     
     updater = Updater(token=TOKEN, use_context=True)
     
@@ -58,9 +48,14 @@ def main():
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, respond))
 
-    # Start polling
+    # Start polling in a separate thread
     updater.start_polling()
-    updater.idle()
+    
+    # Run the bot for 6 hours (21600 seconds)
+    time.sleep(21600)  # 6 hours in seconds
+    
+    updater.stop()  # Stop the bot after 6 hours
+    print("Bot has run for 6 hours and is now stopping.")
 
 if __name__ == '__main__':
     main()
