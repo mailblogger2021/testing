@@ -4,7 +4,7 @@ import time
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'
+TOKEN = '6511501073:AAHbWvFY_dKcUQfKNGFODOeYK8PEUJ4vXPI'
 
 # Initialize the database
 def init_db():
