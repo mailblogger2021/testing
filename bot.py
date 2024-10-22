@@ -13,10 +13,17 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS links (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            keyword TEXT UNIQUE,
-            link TEXT
+            keyword TEXT,
+            link TEXT UNIQUE
         )
     ''')
+    conn.commit()
+    conn.close()
+
+def add_link(keyword, link):
+    conn = sqlite3.connect('affiliate_links.db')
+    cursor = conn.cursor()
+    cursor.execute('INSERT OR IGNORE INTO links (keyword, link) VALUES (?, ?)', (keyword, link))
     conn.commit()
     conn.close()
 
@@ -41,6 +48,9 @@ def respond(update: Update, context: CallbackContext):
 
 def main():
     init_db()
+    # Example of adding links
+    add_link('book', 'https://www.amazon.com/your-affiliate-link-for-book')
+    add_link('laptop', 'https://www.amazon.com/your-affiliate-link-for-laptop')
     
     updater = Updater(token=TOKEN, use_context=True)
     
