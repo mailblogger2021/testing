@@ -40,4 +40,4 @@ jobs:
       run: |
         source venv/bin/activate  # Activate virtual environment
         # python manage.py runserver
-        nohup python myproject/manage.py run_bot &
+        nohup python manage.py run_bot &
