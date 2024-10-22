@@ -27,6 +27,6 @@ jobs:
 
     - name: Run bot for 6 hours
       run: |
-        python your_bot_script.py &  # Replace with your actual bot script name
+        python bot.py &  # Replace with your actual bot script name
         sleep 21600  # Sleep for 6 hours (21600 seconds)
-        pkill -f your_bot_script.py  # Kill the bot process after 6 hours
+        pkill -f bot.py  # Kill the bot process after 6 hours
