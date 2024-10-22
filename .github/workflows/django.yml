@@ -1,4 +1,4 @@
-name: Django CI
+name: Django CI with Virtual Environment
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -19,11 +19,24 @@ jobs:
       with:
         python-version: '3.8'  # Ensure using Python 3.8
 
-    - name: Install dependencies
+    - name: Create and activate virtual environment
       run: |
-        python -m pip install --upgrade pip
-        pip install python-telegram-bot  # Install only your Telegram bot dependencies
+        python -m venv venv  # Create virtual environment
+        source venv/bin/activate  # Activate virtual environment
+        python -m pip install --upgrade pip  # Upgrade pip inside virtual environment
+        pip install -r requirements.txt  # Install dependencies inside virtual environment
+
+    - name: Run database migrations  # Optional: Skip if no DB migrations needed
+      run: |
+        source venv/bin/activate  # Activate virtual environment
+        python myproject/manage.py migrate  # Run migrations
 
     - name: Run Tests
       run: |
-        python myproject/manage.py test
+        source venv/bin/activate  # Activate virtual environment
+        python myproject/manage.py test  # Run tests
+
+    - name: Run Telegram Bot  # Optional: Running the bot, adjust this step as needed
+      run: |
+        source venv/bin/activate  # Activate virtual environment
+        nohup python myproject/manage.py run_bot &
