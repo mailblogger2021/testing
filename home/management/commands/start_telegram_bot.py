@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 from home.models import CowinData
 from home.helpers import get_cowin_data_by_pincode
 
-API_KEY = '1850071620:AAEgnLjlFXXST25n-ZvuojWhMtZQ1AucETk'
+API_KEY = '6511501073:AAHbWvFY_dKcUQfKNGFODOeYK8PEUJ4vXPI'
 
 # Helper function to validate pincode
 def isValidPinCode(pinCode):
