@@ -39,4 +39,4 @@ jobs:
     - name: Run Telegram Bot  # Optional: Running the bot, adjust this step as needed
       run: |
         source venv/bin/activate  # Activate virtual environment
-        nohup python manage.py run_bot &
+        python manage.py runserver
