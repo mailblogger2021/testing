@@ -20,6 +20,13 @@ def init_db():
     conn.commit()
     conn.close()
 
+def add_link(keyword, link):
+    conn = sqlite3.connect('affiliate_links.db')
+    cursor = conn.cursor()
+    cursor.execute('INSERT OR IGNORE INTO links (keyword, link) VALUES (?, ?)', (keyword, link))
+    conn.commit()
+    conn.close()
+
 # Function to start the bot
 def start(update: Update, context: CallbackContext):
     update.message.reply_text('Hello! I am your Amazon affiliate bot. Ask me about products!')
@@ -41,7 +48,9 @@ def respond(update: Update, context: CallbackContext):
 
 def main():
     init_db()
-    
+    add_link('book', 'https://www.amazon.com/your-affiliate-link-for-book')
+    add_link('laptop', 'https://www.amazon.com/your-affiliate-link-for-laptop')
+
     updater = Updater(token=TOKEN, use_context=True)
     
     # Add handlers
