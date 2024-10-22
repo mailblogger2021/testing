@@ -1,6 +1,9 @@
 name: Deploy Telegram Bot
 
 on:
+  push:
+    branches:
+      - main 
   schedule:
     - cron: '0 */6 * * *'  # This cron expression runs every 6 hours
 
