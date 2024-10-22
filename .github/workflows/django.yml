@@ -29,14 +29,14 @@ jobs:
     - name: Run database migrations  # Optional: Skip if no DB migrations needed
       run: |
         source venv/bin/activate  # Activate virtual environment
-        python myproject/manage.py migrate  # Run migrations
+        python manage.py migrate  # Run migrations
 
     - name: Run Tests
       run: |
         source venv/bin/activate  # Activate virtual environment
-        python myproject/manage.py test  # Run tests
+        python manage.py test  # Run tests
 
     - name: Run Telegram Bot  # Optional: Running the bot, adjust this step as needed
       run: |
         source venv/bin/activate  # Activate virtual environment
-        nohup python myproject/manage.py run_bot &
+        nohup python manage.py run_bot &
